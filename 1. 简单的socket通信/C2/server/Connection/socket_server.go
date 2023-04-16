@@ -47,16 +47,9 @@ func process(conn net.Conn) {
 	}
 }
 
-// func Trim(input string) string {
-// 	inputInfo := strings.Trim(input, "\r\n")
-// 	inputInfo = strings.Trim(inputInfo, " ")
-// 	return inputInfo
-
-// }
 
 // 接收客户端数据
 func read_server(conn net.Conn) {
-	defer conn.Close()
 	// 设置一次接收多少数据
 	buf := make([]byte, 4096)
 	reader := bufio.NewReader(conn)
