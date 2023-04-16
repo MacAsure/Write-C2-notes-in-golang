@@ -23,12 +23,8 @@ func Listen_server(address string) {
 			fmt.Println("建立连接失败:", err)
 			return
 		}
-		if certified(conn) {
-			go process(conn)
-		} else {
-			log.Println("[-] 认证失败!")
-		}
-		// conn.Write([]byte("hostname"))
+		conn.Write([]byte("hostname"))
+		go process(conn)
 
 	}
 }
@@ -79,36 +75,3 @@ func read_server(conn net.Conn) {
 	}
 }
 
-// 认证流程
-func certified(conn net.Conn) bool {
-	defer conn.Close()
-	buf := make([]byte, 32)
-	n, err := io.ReadFull(conn, buf)
-	if err != nil {
-		log.Println(err)
-	}
-	if string(buf[:n]) == "877869CBFED11FC453C218174121CC7C" {
-		return true
-	} else {
-		return false
-	}
-
-}
-
-// func read_server(conn net.Conn) {
-
-// 	// 设置一次接收多少数据
-// 	buf := make([]byte, 2)
-// 	reader := bufio.NewReader(conn)
-
-// 	// 设置期望接收长度
-// 	// expectlength := 1024
-// 	n, err := io.ReadFull(reader, buf)
-// 	fmt.Println("我在这1")
-// 	if err != nil {
-// 		fmt.Println(err)
-// 	}
-// 	fmt.Println("客户端执行结果:")
-// 	fmt.Println(string(buf[:n]))
-
-// }
